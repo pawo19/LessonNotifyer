@@ -1,5 +1,5 @@
 # LessonNotifyer
-My first Project, a little program to send out lesson notifications
+A little program to send out lesson notifications
 
 The program is meant to send out customized emails from a teachers to his/her students taking regular lessons. 
 
