@@ -162,7 +162,7 @@ public class Customer {
     // fills the message instance variable with the customized text for each Customer in their local timeZone, logs the lesson information in the user's timeZone
     public static void createMessages(FileWriter writer) throws IOException{
         //writer is used to Log the retrieved info to a log file
-        writer.write("Total lessons in " + Month.of(Main.main.getMonth()) + ", " +Main.main.getYear()+ " = " + Lesson.getCount() +"\n"+"\n");
+        writer.write("Total lessons in " + Month.of(Main.main.getMonth()) + ", " +Main.main.getYear()+ " = " + Lesson.getMonthCount() +"\n"+"\n");
         String message;
         int cusTotal=0;
         int monthTotalRMB=0;
@@ -193,6 +193,8 @@ public class Customer {
                         monthTotalRMB = monthTotalRMB + l.getPrice();
                         break;
                 }
+                //insert this lesson instance to the database
+                CustomerDB.insertLessonsToDatabase(c,l);
             }
             message += "All times in " + c.getTimeZone().toZoneId()+ " time.\n" + "Please let me know if all the suggested lessons work for you.\n\nBest regards,\nPaul";
             c.setMessage(message);
@@ -201,7 +203,6 @@ public class Customer {
             cusTotal = 0;
         }
         writer.write(Month.of(Main.main.getMonth())+ "'s total is:      RMB= " + monthTotalRMB +"     EURO= "+monthTotalEUR+"\n");
-        writer.write("--------------------------------------------------------"+"\n\n\n\n");
         writer.flush();
     }
 

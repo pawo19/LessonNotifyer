@@ -2,7 +2,6 @@ import org.gradle.model.internal.core.ModelNodes.withType
 
 plugins {
     id("java")
-
 }
 
 group = "org.example"
@@ -15,8 +14,9 @@ repositories {
 dependencies {
     implementation("org.apache.poi:poi:5.2.3")
     implementation("com.sun.mail:javax.mail:1.6.2")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
+    implementation("org.mariadb.jdbc:mariadb-java-client:3.1.3")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.2")
 }
 
 tasks{

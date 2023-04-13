@@ -4,9 +4,10 @@ import java.time.LocalTime;
 import java.time.ZonedDateTime;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class Lesson {
+public class Lesson{
 
-    private static AtomicLong count = new AtomicLong(1);
+    private static AtomicLong monthCount = new AtomicLong(0);
+    private static AtomicLong DBLessonCount = new AtomicLong(Main.main.getLastID());
     private final long lessonID;
     private Duration duration;
     private int price;
@@ -14,19 +15,24 @@ public class Lesson {
     private LocalTime time;
 
     public Lesson(Duration duration, int price, LocalDate date, LocalTime time){
-        lessonID = count.getAndIncrement();
+        lessonID = DBLessonCount.getAndIncrement();
         this.duration = duration;
         this.price = price;
         this.date = date;
         this.time = time;
+        monthCount.getAndIncrement();
     }
 
     public long getLessonID() {
         return lessonID;
     }
 
-    public static AtomicLong getCount() {
-        return count;
+    public static AtomicLong getMonthCount() {
+        return monthCount;
+    }
+
+    public static AtomicLong getDBLessonCount() {
+        return DBLessonCount;
     }
 
     public Duration getDuration() {
@@ -44,5 +50,4 @@ public class Lesson {
     public LocalTime getTime() {
         return time;
     }
-
 }

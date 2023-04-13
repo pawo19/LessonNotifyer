@@ -10,6 +10,7 @@ public class Main {
     private int year;
     private TimeZone myTimeZone;
     private static HashMap<DayOfWeek, List<LocalDate>> dayList = new HashMap<>();
+    private static int lastID;
 
     public Main(int month, int year){
         this.month  = month;
@@ -36,6 +37,10 @@ public class Main {
         this.month = month;
     }
 
+    public int getLastID() {
+        return lastID;
+    }
+
     public static String getFormattedMonth() {
         return formattedMonth;
     }
@@ -51,10 +56,13 @@ public class Main {
             main = new Main(m, y);
             formattedMonth = Util.formatMonth();
             Util.calculateDaysInMonth();
+            CustomerDB.connect();
+            lastID = CustomerDB.getLastLessonID();
             Customer.createCustomersFromFile();
             writer = new FileWriter(file, true);
             Customer.createMessages(writer);
             Email.sendEmails(writer);
+            writer.close();
         }catch(IOException e){
             e.printStackTrace();
         }

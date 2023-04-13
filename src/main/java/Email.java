@@ -17,7 +17,7 @@ public class Email extends MimeMessage {
             this.addHeader("Content-type", "text/HTML; charset=UTF-8");
             this.addHeader("format", "flowed");
             this.addHeader("Content-Transfer-Encoding", "8bit");
-            this.setFrom(new InternetAddress("myEmail@address"));
+            this.setFrom(new InternetAddress("myEmail@Address.com"));
             this.setSubject("German lessons in " +month, "UTF-8");
             this.setText(text, "UTF-8");
             this.setRecipients(Message.RecipientType.TO, InternetAddress.parse(contact, false));
@@ -27,16 +27,15 @@ public class Email extends MimeMessage {
     }
 
     public static void sendEmails(FileWriter writer){
-        String myEmail = "myEmail@address";
-        String password = "myPassword";
+        String myEmail = "myEmail@Address.com";
+        String password = "Password";
         Properties prop= new Properties();
         prop.setProperty("mail.transport.protocol", "smtp");
-        prop.setProperty("mail.smtp.host", "smtp.office365.com");
-        prop.put("mail.smtp.ssl.trust", "smtp.office365.com");
-        prop.put("mail.smtp.starttls.enable", "true");
-        prop.put("mail.smtp.auth", "true");
+        prop.setProperty("mail.smtp.host", "smtp.gmail.com");
+        prop.put("mail.smtp.ssl.trust", "smtp.gmail.com");
         prop.put("mail.smtp.port", "587");
-        prop.put("smtp.starttls.enable", "true");
+        prop.put("mail.smtp.auth", "true");
+        prop.put("mail.smtp.starttls.enable", "true");
         Authenticator auth = new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(myEmail, password);
@@ -50,17 +49,20 @@ public class Email extends MimeMessage {
                 em.createEmail(c.getContact(), c.getMessage(),Main.getFormattedMonth());
                 try {
                     Transport.send(em);
-                }catch(MessagingException e){
+                    writer.write("The Email to " + c.getName() + " has been successfully sent.\n");
+                    writer.flush();
+                }
+               catch(MessagingException e){
                     e.printStackTrace();
                 }catch(Exception e){
                     e.printStackTrace();
                 }
-                try {
-                    writer.write("The Email to " + c.getName() + " has been successfully sent.");
-                }catch (IOException e){
-                    e.printStackTrace();
-                }
             }
+        }
+        try {
+            writer.write("--------------------------------------------------------" + "\n\n\n\n");
+        }catch (IOException e){
+            e.printStackTrace();
         }
     }
 
